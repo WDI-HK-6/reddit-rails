@@ -1,0 +1,25 @@
+$(document).ready(function(){
+  $(document).on('click','#comment_btn', function(){
+
+    $.ajax({
+      type: 'post',
+      url: '/comments',
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      },
+      data: {
+        'post_id': $(this).data('postid'),
+        'content': $('#comment_content').val()
+      },
+      success: function(response, status){
+        console.log(response);
+        var comment = response.data;
+        var userEmail = response.email;
+
+        var html = '<tr><td>'+comment.content+'</td><td>'+userEmail+'</td></tr>';
+        $('#comments_list').prepend(html);
+      }
+    })
+
+  });
+});

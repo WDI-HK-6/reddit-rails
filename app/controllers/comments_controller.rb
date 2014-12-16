@@ -2,18 +2,20 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    # comment = Comment.new(comment_params)
-    comment = current_user.comments.new(comment_params)
 
+    # We are just creating an object. We are not talking to the database at this stage
+    comment = Comment.new(
+      :content => params[:content], 
+      :post_id => params[:post_id],
+      :user => current_user
+    )
+
+    # comment.save will talk to the database for us AND  return either TRUE or FALSE
     if comment.save
-      redirect_to comment.post
+      #display
+      render json: {data: comment, email: current_user.email}, status: 201
     else
-      redirect_to :back
+      #display
     end
   end
-
-  private
-    def comment_params
-      params.require(:comment).permit(:content, :post_id)
-    end
 end
