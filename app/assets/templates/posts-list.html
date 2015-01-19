@@ -1,0 +1,15 @@
+<h1>Hello World!</h1>
+
+<!-- You don't need to call the controller because it's already defined in app.config -->
+<ul>
+  <li ng-repeat="item in words track by $index">{{ item }}</li>
+</ul>
+
+<table class="table table-condensed">
+  <tr ng-repeat="post in posts">
+    <td>{{ post.title }}</td>
+    <td ng-if="post.url">{{ post.url }}</td>
+    <td ng-if="!post.url">No URL</td>
+    <td><a ng-href="#{{post.link}}">Link</a></td>
+  </tr>
+</table>

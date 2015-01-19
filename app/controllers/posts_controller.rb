@@ -12,6 +12,8 @@ class PostsController < ApplicationController
 
 		# this will store all the posts in an array into the variable @posts
     @posts = Post.all
+
+    # render json: @posts
   end
 
   # this is also function

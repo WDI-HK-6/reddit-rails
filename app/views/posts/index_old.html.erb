@@ -1,0 +1,119 @@
+<h3>Angular</h3>
+
+<input type="text" placeholder="Please type something" ng-model="name">
+<h5>{{ name }}</h5>
+
+<input type="text" placeholder="Give me the price" ng-model="price">
+<h5>{{ price }}</h5>
+
+----------------------------------
+
+<h3>Connect Angular Controller Defined in JS to View</h3>
+
+<div ng-controller="PostCtrl">
+  {{ brand }}
+
+  {{ prices }}
+
+  <!-- This works -->
+<!--   <ul ng-repeat="item in prices">
+    <li>{{ item }}</li>
+  </ul> -->
+
+  <ul ng-repeat="price in prices track by $index">
+    <li>{{ price }}</li>
+  </ul>
+
+  <!-- addPrice() will look for a function inside the PostCtrl -->
+  <form ng-submit="addPrice()" name="priceForm">
+    <!-- You can now refer to $scope.newPrice in your PostCtrl -->
+    <!-- <input type="text" placeholder="Add a new price" ng-model="newPrice" ng-maxlength="8"> -->
+    <input type="number" min="0" max ="1000000" placeholder="Add a new price" ng-model="newPrice" ng-maxlength="8">
+  </form>
+
+  <div>
+    Total Price: {{ totalPrice(prices) }}
+  </div>
+
+  <%= @name %>
+</div>
+
+----------------------------------
+
+<div ng-controller="CompanyCtrl">
+  <input type="text" placeholder="Search for companies" ng-model="companyName">
+
+  <ul ng-repeat="company in companies | filter:companyName">
+    <li>{{ company }}</li>
+    <a href="http://www.google.com/{{company}}">http://www.google.com/{{company}}</a>
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Jquery</h1>
+
+<input type="text" placeholder="Please type something" id="name_input">
+
+<h3 id="name_output"></h3>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#name_input').keyup(function(){
+      $('#name_output').text($('#name_input').val());
+    });
+  })
+</script>
+ -->
+----------------------------------
+
+<h1>A list of posts should be here:</h1>
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Owner</th>
+      <th>Title</th>
+      <th>URL</th>
+      <th>Time</th>
+      <th >Link</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td class="active"><%= post.id %></td>
+        <td class="active"><%= post.user.email %></td>
+        <td class="success"><%= post.title %></td>
+        <td class="warning"><%= post.url %></td>
+        <td class="danger"><%= "#{time_ago_in_words(post.created_at)}" %></td>
+        <td class="info"><%= link_to "link to this post", post %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New post", new_post_path %>
